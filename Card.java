@@ -21,7 +21,7 @@ public class Card {
         switch(suit){
             case "heart": 
                 try{
-                    suitImage = ImageIO.read(new File("hearts.png"));
+                    suitImage = ImageIO.read(new File("heart.png"));
                 }
                 catch(IOException e){
                     System.out.println(e);
