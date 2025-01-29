@@ -17,18 +17,14 @@ public class Card {
     
     public Card(String nm, int val, String s){
         name=nm; value=val; suit=s;
-        
-        switch(suit){
-            case "heart": 
-                try{
-                    suitImage = ImageIO.read(new File("heart.png"));
-                }
-                catch(IOException e){
-                    System.out.println(e);
-                }
-                break;
+        try{
+            suitImage = ImageIO.read(new File(suit+".png"));
         }
-    }
+        catch(IOException e){
+            System.out.println(e);
+        }
+        }
+    
 
     public void drawMe(Graphics g, int x, int y){
         g.setColor(Color.WHITE);
@@ -42,9 +38,12 @@ public class Card {
             case "club": g.setColor(Color.black); break;
             case "diamond": g.setColor(Color.red); break;
         }
-
-        g.drawImage(suitImage, x, y,null);
-        g.drawString(name, x+45, y+65);
+        g.drawImage(suitImage, x+5, y+5, 35, 35, null);
+        if(value==10){
+            g.drawString(name, x+20, y+90);
+        } else{
+            g.drawString(name, x+35, y+90);
+        }
     }
 
     public int getValue(){
