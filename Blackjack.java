@@ -3,7 +3,7 @@ import java.awt.*;
 public class Blackjack {
     
     private Card[] deck;
-    private int handSize=2,total=0;
+    private int handSize=0,total=0;
 
     public Blackjack(){
         total=0;
@@ -32,7 +32,6 @@ public class Blackjack {
         deck[start+12] = new Card("K", 10, suit);
         }
         
-        shuffle();
     }
 
     public void drawGame(Graphics g){
@@ -55,6 +54,10 @@ public class Blackjack {
 
     public void hit(){
         handSize++;
+    }
+    public void start(){
+        shuffle();
+        handSize=2;
     }
     public int getTotal(){
         return total;
