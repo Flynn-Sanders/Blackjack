@@ -1,12 +1,17 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Blackjack {
     
     private Card[] deck;
-    private int handSize=0,total=0;
+    private ArrayList<Card> hand = new ArrayList<>();
+    private int deckIndex;
+    private int total=0;
+    private boolean hasAce;
 
     public Blackjack(){
         total=0;
+        deckIndex = 0;
         deck = new Card[52];
         String suit = "";
         for(int i = 0; i<4; i++){
@@ -36,11 +41,9 @@ public class Blackjack {
 
     public void drawGame(Graphics g){
         int x = 20; int y = 200;
-        total=0;
-        for(int i = 0; i<handSize; i++){
-            deck[i].drawMe(g, x, y);
-            total+=deck[i].getValue();
-            x+=105;
+        for(Card c : hand){
+            c.drawMe(g, x, y);
+            x+=110;
         }
     }
     public void shuffle(){
@@ -53,11 +56,35 @@ public class Blackjack {
     }
 
     public void hit(){
-        handSize++;
+        Card nextCard = deck[deckIndex];
+        hand.add(nextCard);
+        if(nextCard.getName().equals("A")){
+            hasAce=true;
+            if(total+11 > 21){
+                total+=1;
+                hasAce=false;
+            }
+            else{
+                total+=11;
+            }
+
+        }
+        else{
+            total+=nextCard.getValue();
+        }
+        if(total>21 && hasAce){
+            hasAce=false;
+            total-=10;
+        }
+        deckIndex++;
+        
+        
     }
     public void start(){
         shuffle();
-        handSize=2;
+        hand.clear();
+        total=0;
+        hit(); hit();
     }
     public int getTotal(){
         return total;

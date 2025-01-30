@@ -92,15 +92,19 @@ public class Table extends JPanel implements ActionListener {
         if( e.getSource() == hitButton ){
             if( round ) { 
                 bjack.hit(); 
-            }
-            repaint();
-            if(bjack.getTotal()>21){
-                round=false;
-                System.out.println("BUST");
+                System.out.println("HIT");
+                if(bjack.getTotal()>21){
+                    round=false;
+                    System.out.println("BUST");
+                }
             }
         }
         else if( e.getSource() == stayButton ){
             round=false;
+            betText.setVisible(true);
+            betButton.setVisible(true);
+            hitButton.setVisible(false);
+            stayButton.setVisible(false);
         }
         else if(e.getSource()==startButton){
             game=true;
