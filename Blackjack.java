@@ -84,7 +84,8 @@ public class Blackjack {
         shuffle();
         hand.clear();
         total=0;
-        hit(); hit();
+        hit(); 
+        hit();
     }
     public int getTotal(){
         return total;

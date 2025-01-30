@@ -16,6 +16,7 @@ public class Table extends JPanel implements ActionListener {
     private final Font standardFont = new Font("Arial",Font.BOLD,20);
     private final Font titleFont = new Font("Sans Serif", Font.BOLD, 60);
     private boolean game, round;
+    private int balance,bet;
 
 
 	public Table() {
@@ -107,19 +108,28 @@ public class Table extends JPanel implements ActionListener {
             stayButton.setVisible(false);
         }
         else if(e.getSource()==startButton){
+            balance=100;
             game=true;
             startButton.setVisible(false);
             betText.setVisible(true);
             betButton.setVisible(true);
         }
         else if(e.getSource()==betButton){
-            round=true;
+            
+
+            bet=Integer.parseInt(betText.getText());
+            if(bet>balance || bet<=0){
+                System.out.println("INVALID AMOUNT");
+            }
+            else{
+                round=true;
             hitButton.setVisible(true);
             stayButton.setVisible(true);
             betText.setVisible(false);
             betButton.setVisible(false);
 
             bjack.start();
+            }
         }
     	repaint();
 
