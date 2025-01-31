@@ -1,5 +1,9 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 public class Blackjack {
     
@@ -8,10 +12,14 @@ public class Blackjack {
     private ArrayList<Card> dealerHand = new ArrayList<>();
     private int deckIndex;
     private int total=0, dealerTotal=0;;
-    private boolean hasAce, dealerHasAce;
+    private boolean hasAce, dealerHasAce, stayed;
+    private BufferedImage cardback;
+    
+
 
     public Blackjack(){
         total=0;
+        stayed=true;
         deckIndex = 0;
         deck = new Card[52];
         String suit = "";
@@ -37,19 +45,30 @@ public class Blackjack {
         deck[start+11] = new Card("Q", 10, suit);
         deck[start+12] = new Card("K", 10, suit);
         }
+
+        try{
+            cardback = ImageIO.read(new File("cardback.png"));
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
         
     }
 
     public void drawGame(Graphics g){
-        int x = 20; int y = 100;
+        int x = 20; int y = 300;
         for(Card c : hand){
             c.drawMe(g, x, y);
             x+=110;
         }
-        x=20; y=300;
+        x=20; y=100;
+        
         for(Card c : dealerHand){
             c.drawMe(g, x, y);
             x+=110;
+        }
+        if(!stayed){
+            g.drawImage(cardback,20,100,100,140,null);
         }
     }
     public void shuffle(){
@@ -124,6 +143,7 @@ public class Blackjack {
         return 1;
     }
     public int evaluate(){
+        stayed=true;
         if(total>21){
             System.out.println("BUST");
             return 0;
@@ -139,7 +159,7 @@ public class Blackjack {
                     break;
                 }
             }
-            if (total>dealerTotal){
+            if (total>dealerTotal || (hand.size()>=6 && total<=21)){
                 System.out.println("WIN");
                 return 1;
                 
@@ -148,6 +168,7 @@ public class Blackjack {
                 System.out.println("LOSS");
                 return 0;
             }
+            System.out.println("PUSH");
             return 2;
         }
     }
@@ -155,6 +176,12 @@ public class Blackjack {
         return total;
     }
     public int getDealerTotal(){
+        if(!stayed){
+            return dealerHand.get(1).getValue();
+        }
         return dealerTotal;
+    }
+    public void setStayed(boolean s){
+        stayed = s;
     }
 }
