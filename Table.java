@@ -77,6 +77,8 @@ public class Table extends JPanel implements ActionListener {
             g.setColor(Color.green);
         }
         g.drawString(bjack.getTotal()+"", 20, 20);
+        g.setColor(Color.black);
+        g.drawString("$"+balance, 100, 20);
         }
 	}
 
@@ -96,16 +98,26 @@ public class Table extends JPanel implements ActionListener {
                 System.out.println("HIT");
                 if(bjack.getTotal()>21){
                     round=false;
-                    System.out.println("BUST");
+                    
                 }
             }
         }
         else if( e.getSource() == stayButton ){
+            hitButton.setVisible(false);
+            stayButton.setVisible(false);
+            //lwp
+            if(bjack.evaluate()==1){
+                balance+=bet*2;
+                
+            }
+            else if(bjack.evaluate()==2){
+                balance+=bet;
+                
+            }
             round=false;
             betText.setVisible(true);
             betButton.setVisible(true);
-            hitButton.setVisible(false);
-            stayButton.setVisible(false);
+            repaint();
         }
         else if(e.getSource()==startButton){
             balance=100;
@@ -122,13 +134,18 @@ public class Table extends JPanel implements ActionListener {
                 System.out.println("INVALID AMOUNT");
             }
             else{
+                balance-=bet;
                 round=true;
             hitButton.setVisible(true);
             stayButton.setVisible(true);
             betText.setVisible(false);
             betButton.setVisible(false);
 
-            bjack.start();
+            if(bjack.start()==0){
+                System.out.println("BLACKJACK");
+                balance+=Math.ceil(bet*1.5);
+            }
+            
             }
         }
     	repaint();

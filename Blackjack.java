@@ -5,9 +5,10 @@ public class Blackjack {
     
     private Card[] deck;
     private ArrayList<Card> hand = new ArrayList<>();
+    private ArrayList<Card> dealerHand = new ArrayList<>();
     private int deckIndex;
-    private int total=0;
-    private boolean hasAce;
+    private int total=0, dealerTotal=0;;
+    private boolean hasAce, dealerHasAce;
 
     public Blackjack(){
         total=0;
@@ -40,8 +41,13 @@ public class Blackjack {
     }
 
     public void drawGame(Graphics g){
-        int x = 20; int y = 200;
+        int x = 20; int y = 100;
         for(Card c : hand){
+            c.drawMe(g, x, y);
+            x+=110;
+        }
+        x=20; y=300;
+        for(Card c : dealerHand){
             c.drawMe(g, x, y);
             x+=110;
         }
@@ -77,17 +83,78 @@ public class Blackjack {
             total-=10;
         }
         deckIndex++;
-        
-        
     }
-    public void start(){
+    public void dealerHit(){
+        Card nextCard = deck[deckIndex];
+        dealerHand.add(nextCard);
+        if(nextCard.getName().equals("A")){
+            dealerHasAce=true;
+            if(dealerTotal+11 > 21){
+                dealerTotal+=1;
+                dealerHasAce=false;
+            }
+            else{
+                dealerTotal+=11;
+            }
+
+        }
+        else{
+            dealerTotal+=nextCard.getValue();
+        }
+        if(dealerTotal>21 && dealerHasAce){
+            dealerHasAce=false;
+            dealerTotal-=10;
+        }
+        deckIndex++;
+    }
+    
+    public int start(){
         shuffle();
         hand.clear();
+        dealerHand.clear();
         total=0;
+        dealerTotal=0;
         hit(); 
         hit();
+        if(total==21){
+            return 0;
+        }
+        dealerHit();
+        dealerHit();
+        return 1;
+    }
+    public int evaluate(){
+        if(total>21){
+            System.out.println("BUST");
+            return 0;
+        }
+        else{
+            while(dealerTotal<=16){
+                dealerHit();
+                if(dealerTotal>21){
+                    System.out.println("DEALER BUST");
+                    return 1;
+                }
+                else if(dealerTotal>16){
+                    break;
+                }
+            }
+            if (total>dealerTotal){
+                System.out.println("WIN");
+                return 1;
+                
+            }
+            else if(total<dealerTotal){
+                System.out.println("LOSS");
+                return 0;
+            }
+            return 2;
+        }
     }
     public int getTotal(){
         return total;
+    }
+    public int getDealerTotal(){
+        return dealerTotal;
     }
 }
