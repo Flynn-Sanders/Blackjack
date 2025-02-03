@@ -26,10 +26,10 @@ public class Blackjack {
         for(int i = 0; i<4; i++){
             int start = 13*i;
             switch (i){
-                case 0: suit="spade"; break;
-                case 1: suit="heart"; break;
-                case 2: suit="club"; break;
-                case 3: suit="diamond"; break;
+                case 0 -> suit="spade";
+                case 1 -> suit="heart";
+                case 2 -> suit="club";
+                case 3 -> suit="diamond";
             }
         deck[start] = new Card("A", 11, suit);
         deck[start+1] = new Card("2", 2, suit);
