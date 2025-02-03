@@ -17,12 +17,20 @@ public class Table extends JPanel implements ActionListener {
     private final Font titleFont = new Font("Sans Serif", Font.BOLD, 60);
     private boolean game, round;
     private int balance,bet;
+    private Color bg, fg, buttons, buttonsDisabled, play;
 
 
 	public Table() {
 		setLayout(null);
         game=false;
         round=false;
+
+        bg = new Color(15,33,46);
+        fg = new Color(33,55,67);
+        buttons = new Color(40,62,75);
+        buttonsDisabled = new Color(40,62,75,128);
+        play = new Color(1,231,1);
+
 
 		hitButton = new JButton("HIT");
     	hitButton.setBounds(50, 500, 100, 30); 
