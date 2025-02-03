@@ -72,7 +72,6 @@ public class Table extends JPanel implements ActionListener {
             drawStart(g);
         }
         else{
-		
         bjack.drawGame(g);
         g.setFont(standardFont);
         g.setColor(Color.BLACK);
