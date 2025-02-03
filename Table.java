@@ -76,10 +76,7 @@ public class Table extends JPanel implements ActionListener {
 
 	public void paintComponent(Graphics g){	
         super.paintComponent(g);
-        if(!game){
-            drawStart(g);
-        }
-        else{
+        
         bjack.drawGame(g);
         g.setFont(standardFont);
         g.setColor(Color.BLACK);
@@ -100,17 +97,8 @@ public class Table extends JPanel implements ActionListener {
         g.drawString(bjack.getDealerTotal()+"",20,40);
         g.setColor(Color.black);
         g.drawString("$"+balance, 100, 20);
-        }
         
 	}
-
-    public void drawStart(Graphics g){
-        g.setColor(Color.RED);
-        g.fillRect(0, 0, 1000, 600);
-        g.setFont(titleFont);
-        g.setColor(Color.BLACK);
-        g.drawString("BLACKJACK", 300, 200);
-    }
 
     @Override
 	public void actionPerformed(ActionEvent e){

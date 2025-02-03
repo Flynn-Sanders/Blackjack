@@ -56,19 +56,23 @@ public class Blackjack {
     }
 
     public void drawGame(Graphics g){
-        int x = 20; int y = 300;
+        int cardWidth = 100;
+        int cardHeight = 140;
+        int x = (int)(267+(0.5*hand.size()*cardWidth)) ; 
+        int y = 300;
         for(Card c : hand){
             c.drawMe(g, x, y);
-            x+=110;
+            x+=cardWidth+10;
         }
-        x=20; y=100;
+        x=(int)(633.5-(0.5*dealerHand.size()*cardWidth)); y-=(cardHeight+30);
         
         for(Card c : dealerHand){
             c.drawMe(g, x, y);
             x+=110;
         }
+        x=(int)(633.5-(0.5*dealerHand.size()*cardWidth));
         if(!stayed){
-            g.drawImage(cardback,20,100,100,140,null);
+            g.drawImage(cardback,x,y,100,140,null);
         }
     }
     public void shuffle(){
