@@ -14,10 +14,9 @@ public class Table extends JPanel implements ActionListener {
 	private final JButton hitButton,stayButton,doubleButton,betButton;
     private final JTextField betText;
     private final Font standardFont = new Font("Arial",Font.BOLD,20);
-    private final Font titleFont = new Font("Sans Serif", Font.BOLD, 60);
     private boolean round;
     private int balance,bet;
-    private Color bg, bgDisabled, fg, buttons, buttonsDisabled, play,playDisabled;
+    private final Color bg, bgDisabled, fg, buttons, buttonsDisabled, play,playDisabled;
 
 
 	public Table() {
@@ -26,56 +25,55 @@ public class Table extends JPanel implements ActionListener {
         balance=100;
 
         bg = new Color(15,33,46);
-        bgDisabled = new Color(15,33,46,128);
+        bgDisabled = new Color(15,33,46,150);
         fg = new Color(33,55,67);
         buttons = new Color(40,62,75);
-        buttonsDisabled = new Color(40,62,75,128);
+        buttonsDisabled = new Color(40,62,75,150);
         play = new Color(1,231,1);
-        playDisabled = new Color(1,231,1,128);
+        playDisabled = new Color(1,231,1,150);
 
 
 		hitButton = new JButton("HIT");
-    	hitButton.setBounds(50, 500, 100, 30); 
+    	hitButton.setBounds(10, 74, 120,40); 
         add( hitButton ); 
         hitButton.addActionListener( this );
         hitButton.setVisible(true);
         hitButton.setEnabled(false);
-        hitButton.setOpaque(false);
+        hitButton.setContentAreaFilled(false);
         hitButton.setBackground(buttonsDisabled);
 
-        stayButton = new JButton("STAY");
-    	stayButton.setBounds(200, 500, 100, 30); 
+        stayButton = new JButton("STAND");
+    	stayButton.setBounds(138, 74, 120,40); 
         add( stayButton ); 
         stayButton.addActionListener( this );
         stayButton.setVisible(true);
         stayButton.setEnabled(false);
-        stayButton.setOpaque(false);
+        stayButton.setContentAreaFilled(false);
         stayButton.setBackground(buttonsDisabled);
 
         doubleButton = new JButton("DOUBLE");
-    	doubleButton.setBounds(50, 550, 100, 30); 
+    	doubleButton.setBounds(10, 128, 120,40); 
         add( doubleButton ); 
         doubleButton.addActionListener( this );
         doubleButton.setVisible(true);
         doubleButton.setEnabled(false);
-        doubleButton.setOpaque(false);
+        doubleButton.setContentAreaFilled(false);
         doubleButton.setBackground(buttonsDisabled);
 
         betText = new JTextField();
-        betText.setBounds(600,500,100,30);
+        betText.setBounds(53,28,162,34);
         add(betText);
         betText.setVisible(true);
         betText.setEnabled(true);
-        betText.setOpaque(false);
         betText.setBackground(bg);
 
         betButton = new JButton("PLAY");
-    	betButton.setBounds(600, 540, 100, 30); 
+    	betButton.setBounds(10, 178, 247, 46); 
         add( betButton ); 
         betButton.addActionListener( this );
         betButton.setVisible(true);
         betButton.setEnabled(true);
-        betButton.setOpaque(false);
+        betButton.setContentAreaFilled(false);
         betButton.setBackground(play);
 
 	}
@@ -114,7 +112,7 @@ public class Table extends JPanel implements ActionListener {
 		//Sets the size of the panel
 		return new Dimension(1000,600);
 	}
-
+    @Override
 	public void paintComponent(Graphics g){	
         super.paintComponent(g);
         
@@ -122,7 +120,7 @@ public class Table extends JPanel implements ActionListener {
         g.fillRect(0, 0, 1000, 600);
         g.setColor(fg);
         g.fillRect(0, 0, 267, 600);
-        
+
 
 
         bjack.drawGame(g);
