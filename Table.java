@@ -11,62 +11,103 @@ import javax.swing.JTextField;
 public class Table extends JPanel implements ActionListener {
 	
     private final Blackjack bjack = new Blackjack();
-	private final JButton hitButton,stayButton,doubleButton,startButton,betButton;
+	private final JButton hitButton,stayButton,doubleButton,betButton;
     private final JTextField betText;
     private final Font standardFont = new Font("Arial",Font.BOLD,20);
     private final Font titleFont = new Font("Sans Serif", Font.BOLD, 60);
-    private boolean game, round;
+    private boolean round;
     private int balance,bet;
-    private Color bg, fg, buttons, buttonsDisabled, play;
+    private Color bg, bgDisabled, fg, buttons, buttonsDisabled, play,playDisabled;
 
 
 	public Table() {
 		setLayout(null);
-        game=false;
         round=false;
+        balance=100;
 
         bg = new Color(15,33,46);
+        bgDisabled = new Color(15,33,46,128);
         fg = new Color(33,55,67);
         buttons = new Color(40,62,75);
         buttonsDisabled = new Color(40,62,75,128);
         play = new Color(1,231,1);
+        playDisabled = new Color(1,231,1,128);
 
 
 		hitButton = new JButton("HIT");
     	hitButton.setBounds(50, 500, 100, 30); 
         add( hitButton ); 
         hitButton.addActionListener( this );
-        hitButton.setVisible(false);
+        hitButton.setVisible(true);
+        hitButton.setEnabled(false);
+        hitButton.setOpaque(false);
+        hitButton.setBackground(buttonsDisabled);
 
         stayButton = new JButton("STAY");
     	stayButton.setBounds(200, 500, 100, 30); 
         add( stayButton ); 
         stayButton.addActionListener( this );
-        stayButton.setVisible(false);
+        stayButton.setVisible(true);
+        stayButton.setEnabled(false);
+        stayButton.setOpaque(false);
+        stayButton.setBackground(buttonsDisabled);
 
         doubleButton = new JButton("DOUBLE");
     	doubleButton.setBounds(50, 550, 100, 30); 
         add( doubleButton ); 
         doubleButton.addActionListener( this );
-        doubleButton.setVisible(false);
+        doubleButton.setVisible(true);
+        doubleButton.setEnabled(false);
+        doubleButton.setOpaque(false);
+        doubleButton.setBackground(buttonsDisabled);
 
         betText = new JTextField();
         betText.setBounds(600,500,100,30);
         add(betText);
-        betText.setVisible(false);
+        betText.setVisible(true);
+        betText.setEnabled(true);
+        betText.setOpaque(false);
+        betText.setBackground(bg);
 
         betButton = new JButton("PLAY");
     	betButton.setBounds(600, 540, 100, 30); 
         add( betButton ); 
         betButton.addActionListener( this );
-        betButton.setVisible(false);
+        betButton.setVisible(true);
+        betButton.setEnabled(true);
+        betButton.setOpaque(false);
+        betButton.setBackground(play);
 
-        startButton = new JButton("PLAY");
-    	startButton.setBounds(450, 285, 100, 30); 
-        add( startButton ); 
-        startButton.addActionListener( this );
-        startButton.setVisible(true);
 	}
+
+    public void disableBtns(){
+        hitButton.setEnabled(false);
+        hitButton.setBackground(buttonsDisabled);
+        stayButton.setEnabled(false);
+        stayButton.setBackground(buttonsDisabled);
+        doubleButton.setEnabled(false);
+        doubleButton.setBackground(buttonsDisabled);
+    }
+    public void enableBet(){
+        betButton.setEnabled(true);
+        betButton.setBackground(play);
+        betText.setEnabled(true);
+        betText.setBackground(bg);
+    }
+    public void enableBtns(){
+        hitButton.setEnabled(true);
+        hitButton.setBackground(buttons);
+        stayButton.setEnabled(true);
+        stayButton.setBackground(buttons);
+        doubleButton.setEnabled(true);
+        doubleButton.setBackground(buttons);
+    }
+    public void disableBet(){
+        betButton.setEnabled(true);
+        betButton.setBackground(playDisabled);
+        betText.setEnabled(false);
+        betText.setBackground(bgDisabled);
+    }
 
     @Override
 	public Dimension getPreferredSize() {
@@ -77,6 +118,13 @@ public class Table extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g){	
         super.paintComponent(g);
         
+        g.setColor(bg);
+        g.fillRect(0, 0, 1000, 600);
+        g.setColor(fg);
+        g.fillRect(0, 0, 267, 600);
+        
+
+
         bjack.drawGame(g);
         g.setFont(standardFont);
         g.setColor(Color.BLACK);
@@ -106,7 +154,8 @@ public class Table extends JPanel implements ActionListener {
             if( round ) { 
                 bjack.hit(); 
                 System.out.println("HIT");
-                doubleButton.setVisible(false);
+                doubleButton.setEnabled(false);
+                doubleButton.setBackground(buttonsDisabled);
                 if(bjack.getTotal()>21){
                     round=false;
                     
@@ -114,9 +163,7 @@ public class Table extends JPanel implements ActionListener {
             }
         }
         else if( e.getSource() == stayButton ){
-            hitButton.setVisible(false);
-            doubleButton.setVisible(false);
-            stayButton.setVisible(false);
+            disableBtns();
             //lwp
             if(bjack.evaluate()==1){
                 balance+=bet*2;
@@ -127,8 +174,7 @@ public class Table extends JPanel implements ActionListener {
                 
             }
             round=false;
-            betText.setVisible(true);
-            betButton.setVisible(true);
+            enableBet();
             repaint();
         }
         else if(e.getSource()==doubleButton){
@@ -141,9 +187,7 @@ public class Table extends JPanel implements ActionListener {
                     balance-=bet;
                     bet*=2;
                     bjack.hit();
-                    hitButton.setVisible(false);
-                    doubleButton.setVisible(false);
-                    stayButton.setVisible(false);
+                    disableBtns();
                     
                     if(bjack.evaluate()==1){
                         balance+=bet*2;
@@ -154,20 +198,12 @@ public class Table extends JPanel implements ActionListener {
                         
                     }
                     round=false;
-                    betText.setVisible(true);
-                    betButton.setVisible(true);
+                    enableBet();
                     repaint();
                 }
             }
         }
-        else if(e.getSource()==startButton){
-            balance=100;
-            game=true;
-            startButton.setVisible(false);
-            betText.setVisible(true);
-            betButton.setVisible(true);
-            
-        }
+        
         else if(e.getSource()==betButton){
             
 
@@ -179,11 +215,8 @@ public class Table extends JPanel implements ActionListener {
                 balance-=bet;
                 round=true;
                 bjack.setStayed(false);
-                hitButton.setVisible(true);
-                doubleButton.setVisible(true);
-                stayButton.setVisible(true);
-                betText.setVisible(false);
-                betButton.setVisible(false);
+                enableBtns();
+                disableBet();
 
                 if(bjack.start()==0){
                     System.out.println("BLACKJACK");
