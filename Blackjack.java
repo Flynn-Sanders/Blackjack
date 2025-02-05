@@ -66,7 +66,6 @@ public class Blackjack {
 
 
         x = (int)(663.5-(0.5*hand.size()*cardWidth));
-        System.out.println(x);
         y = 315;
         for(Card c : hand){
             c.drawMe(g, x, y);
