@@ -95,6 +95,8 @@ public class Table extends JPanel implements ActionListener {
         betText.setBackground(bgDisabled);
     }
 
+    
+
     @Override
 	public Dimension getPreferredSize() {
 		//Sets the size of the panel
@@ -135,6 +137,8 @@ public class Table extends JPanel implements ActionListener {
                     repaint();
                 }
             }
+            hitButton.revalidate();
+            hitButton.repaint();
         }
         else if( e.getSource() == stayButton ){
             disableBtns();
@@ -149,7 +153,8 @@ public class Table extends JPanel implements ActionListener {
             }
             round=false;
             enableBet();
-            repaint();
+            stayButton.revalidate();
+            stayButton.repaint();
         }
         else if(e.getSource()==doubleButton){
             if(round){
@@ -176,11 +181,11 @@ public class Table extends JPanel implements ActionListener {
                     repaint();
                 }
             }
+            doubleButton.revalidate();
+            doubleButton.repaint();
         }
         
         else if(e.getSource()==betButton){
-            
-
             bet=Integer.parseInt(betText.getText());
             if(bet>balance || bet<=0){
                 System.out.println("INVALID AMOUNT");
@@ -198,6 +203,8 @@ public class Table extends JPanel implements ActionListener {
                 }
             
             }
+            betButton.revalidate();
+            betButton.repaint();
         }
     	repaint();
 
