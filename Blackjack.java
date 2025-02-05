@@ -11,14 +11,18 @@ public class Blackjack {
     private ArrayList<Card> hand = new ArrayList<>();
     private ArrayList<Card> dealerHand = new ArrayList<>();
     private int deckIndex;
+    private double animx,animy;
     private int total=0, dealerTotal=0;;
     private boolean hasAce, dealerHasAce, stayed;
     private BufferedImage cardback;
+    private int cardWidth = 100, cardHeight = 140;
     
 
 
     public Blackjack(){
         total=0;
+        animx = 880;
+        animy = 440;
         stayed=true;
         deckIndex = 0;
         deck = new Card[52];
@@ -56,8 +60,6 @@ public class Blackjack {
     }
 
     public void drawGame(Graphics g){
-        int cardWidth = 100;
-        int cardHeight = 140;
 
         int x,y;
 
@@ -69,32 +71,27 @@ public class Blackjack {
         y = 315;
         for(Card c : hand){
             c.drawMe(g, x, y);
-            x+=cardWidth+10;
+            x+=(int)(cardWidth/2+20);
         }
         x = (int)(663.5-(0.5*dealerHand.size()*cardWidth)); 
         y-=(cardHeight+30);
         
-        for(Card c : dealerHand){
-            c.drawMe(g, x, y);
-            x+=cardWidth+10;
-        }
-        x = (int)(663.5-(0.5*dealerHand.size()*cardWidth)); 
-        if(!stayed){
-            g.drawImage(cardback,x,y,100,140,null);
-        }
-        g.drawImage(cardback, 900, 468, 80,112,null);
-    }
-    public void animateDraw(Graphics g){
-        int x = 800;
-        int y = 275;
-        for(int i = 0; x>700; i++){
-            x--;
-            if(i%4==0){
-                y++;
+        for(int i = 0; i<dealerHand.size();i++){
+            dealerHand.get(i).drawMe(g, x, y);
+            if(i==0&&!stayed){
+                g.drawImage(cardback,x,y,100,140,null);
             }
-            g.drawImage(cardback,x,y,50,70,null);
-            
+            x+=(int)(cardWidth/2+20);
         }
+        
+        
+        g.drawImage(cardback, 880, 440, cardWidth,cardHeight,null);
+        g.drawImage(cardback,(int)animx,(int)animy,cardWidth,cardHeight,null);
+    }
+    public void animateDraw(){
+        animx--;
+        animy-=.5;
+          
         
     
     }
@@ -201,6 +198,12 @@ public class Blackjack {
     }
     public int getTotal(){
         return total;
+    }
+    public double getx(){
+        return animx;
+    }
+    public double gety(){
+        return animy;
     }
     public int getDealerTotal(){
         if(!stayed){

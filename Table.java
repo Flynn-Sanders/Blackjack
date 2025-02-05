@@ -14,7 +14,7 @@ public class Table extends JPanel implements ActionListener {
 	private final JButton hitButton,stayButton,doubleButton,betButton;
     private final JTextField betText;
     private final Font standardFont = new Font("Arial",Font.BOLD,20);
-    private boolean round;
+    private boolean round,isDrawing;
     private int balance,bet;
     private final Color bg, fg, buttons, play;
 
@@ -22,6 +22,7 @@ public class Table extends JPanel implements ActionListener {
 	public Table() {
 		setLayout(null);
         round=false;
+        isDrawing=false;
         balance=100;
 
         bg = new Color(15,33,46);
@@ -102,17 +103,38 @@ public class Table extends JPanel implements ActionListener {
 
         bjack.drawGame(g);
         g.setFont(standardFont);
-        g.setColor(Color.BLACK);
-        g.drawString("$"+balance, 220, 53);
+        g.setColor(Color.white);
         g.drawString("AMOUNT:", 90, 22);
+        g.drawString("Balance: $"+balance, 70, 270);
+
+        
         
 	}
+    public void animate(){
+        while(true){
+        if(isDrawing){
+            bjack.animateDraw();
+            if((int)bjack.getx()==613||(int)bjack.gety()==315);
+            try{
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        
+    }
+    }
 
     @Override
 	public void actionPerformed(ActionEvent e){
         if( e.getSource() == hitButton ){
             if( round ) { 
+                disableBtns();
+                isDrawing=true;
                 bjack.hit(); 
+                enableBtns();
                 System.out.println("HIT");
                 doubleButton.setEnabled(false);
                 if(bjack.getTotal()>21){
