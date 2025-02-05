@@ -67,7 +67,7 @@ public class Blackjack {
 
         x = (int)(663.5-(0.5*hand.size()*cardWidth));
         System.out.println(x);
-        y = 300;
+        y = 315;
         for(Card c : hand){
             c.drawMe(g, x, y);
             x+=cardWidth+10;
@@ -83,13 +83,14 @@ public class Blackjack {
         if(!stayed){
             g.drawImage(cardback,x,y,100,140,null);
         }
+        g.drawImage(cardback, 900, 468, 80,112,null);
     }
     public void animateDraw(Graphics g){
         int x = 800;
         int y = 275;
-        for(int i = 0; x>663; i++){
+        for(int i = 0; x>700; i++){
             x--;
-            if(i%5==0){
+            if(i%4==0){
                 y++;
             }
             g.drawImage(cardback,x,y,50,70,null);

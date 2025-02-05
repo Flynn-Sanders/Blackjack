@@ -16,7 +16,7 @@ public class Table extends JPanel implements ActionListener {
     private final Font standardFont = new Font("Arial",Font.BOLD,20);
     private boolean round;
     private int balance,bet;
-    private final Color bg, bgDisabled, fg, buttons, buttonsDisabled, play,playDisabled;
+    private final Color bg, fg, buttons, play;
 
 
 	public Table() {
@@ -25,12 +25,9 @@ public class Table extends JPanel implements ActionListener {
         balance=100;
 
         bg = new Color(15,33,46);
-        bgDisabled = new Color(15,33,46,150);
         fg = new Color(33,55,67);
         buttons = new Color(40,62,75);
-        buttonsDisabled = new Color(40,62,75,150);
         play = new Color(1,231,1);
-        playDisabled = new Color(1,231,1,150);
 
 
 		hitButton = createButton(10, 74, 120,40,"HIT");
@@ -68,31 +65,21 @@ public class Table extends JPanel implements ActionListener {
 
     public void disableBtns(){
         hitButton.setEnabled(false);
-        hitButton.setBackground(buttonsDisabled);
         stayButton.setEnabled(false);
-        stayButton.setBackground(buttonsDisabled);
         doubleButton.setEnabled(false);
-        doubleButton.setBackground(buttonsDisabled);
     }
     public void enableBet(){
         betButton.setEnabled(true);
-        betButton.setBackground(play);
         betText.setEnabled(true);
-        betText.setBackground(bg);
     }
     public void enableBtns(){
         hitButton.setEnabled(true);
-        hitButton.setBackground(buttons);
         stayButton.setEnabled(true);
-        stayButton.setBackground(buttons);
         doubleButton.setEnabled(true);
-        doubleButton.setBackground(buttons);
     }
     public void disableBet(){
-        betButton.setEnabled(true);
-        betButton.setBackground(playDisabled);
+        betButton.setEnabled(false);
         betText.setEnabled(false);
-        betText.setBackground(bgDisabled);
     }
 
     
@@ -128,7 +115,6 @@ public class Table extends JPanel implements ActionListener {
                 bjack.hit(); 
                 System.out.println("HIT");
                 doubleButton.setEnabled(false);
-                doubleButton.setBackground(buttonsDisabled);
                 if(bjack.getTotal()>21){
                     round=false;
                     disableBtns();
@@ -199,6 +185,10 @@ public class Table extends JPanel implements ActionListener {
 
                 if(bjack.start()==0){
                     System.out.println("BLACKJACK");
+                    round=false;
+                    disableBtns();
+                    enableBet();
+                    repaint();
                     balance+=Math.ceil(bet*2.5);
                 }
             
