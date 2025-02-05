@@ -33,25 +33,11 @@ public class Table extends JPanel implements ActionListener {
         playDisabled = new Color(1,231,1,150);
 
 
-		hitButton = createButton(10, 74, 120,4,"HIT");
+		hitButton = createButton(10, 74, 120,40,"HIT");
 
-        stayButton = new JButton("STAND");
-    	stayButton.setBounds(138, 74, 120,40); 
-        add( stayButton ); 
-        stayButton.addActionListener( this );
-        stayButton.setVisible(true);
-        stayButton.setEnabled(false);
-        stayButton.setContentAreaFilled(false);
-        stayButton.setBackground(buttonsDisabled);
+        stayButton = createButton(138, 74, 120,40,"STAND");
 
-        doubleButton = new JButton("DOUBLE");
-    	doubleButton.setBounds(10, 128, 120,40); 
-        add( doubleButton ); 
-        doubleButton.addActionListener( this );
-        doubleButton.setVisible(true);
-        doubleButton.setEnabled(false);
-        doubleButton.setContentAreaFilled(false);
-        doubleButton.setBackground(buttonsDisabled);
+        doubleButton = createButton(10, 128, 120,40,"DOUBLE");
 
         betText = new JTextField();
         betText.setBounds(53,28,162,34);
@@ -59,19 +45,15 @@ public class Table extends JPanel implements ActionListener {
         betText.setVisible(true);
         betText.setEnabled(true);
         betText.setBackground(bg);
+        betText.setForeground(Color.white);
 
-        betButton = new JButton("PLAY");
-    	betButton.setBounds(10, 178, 247, 46); 
-        add( betButton ); 
-        betButton.addActionListener( this );
-        betButton.setVisible(true);
-        betButton.setEnabled(true);
-        betButton.setContentAreaFilled(true);
+        betButton = createButton(10, 178, 247, 46,"PLAY");
         betButton.setBackground(play);
+        betButton.setEnabled(true);
 
 	}
 
-    public static JButton createButton(int x, int y, int w, int h,String text){
+    public JButton createButton(int x, int y, int w, int h,String text){
         JButton btn = new JButton(text);
     	btn.setBounds(x, y, w,h); 
         add( btn ); 
@@ -79,7 +61,7 @@ public class Table extends JPanel implements ActionListener {
         btn.setVisible(true);
         btn.setEnabled(false);
         btn.setContentAreaFilled(true);
-        btn.setBackground(buttonsDisabled);
+        btn.setBackground(buttons);
         btn.setForeground(Color.white);
         return btn;
     }
@@ -132,23 +114,8 @@ public class Table extends JPanel implements ActionListener {
         bjack.drawGame(g);
         g.setFont(standardFont);
         g.setColor(Color.BLACK);
-        if(bjack.getTotal()>21){
-            g.setColor(Color.RED);
-        }
-        else if(bjack.getTotal()==21){
-            g.setColor(Color.green);
-        }
-        
-        g.drawString(bjack.getTotal()+"", 20, 20);
-        if(bjack.getDealerTotal()>21){
-            g.setColor(Color.RED);
-        }
-        else if(bjack.getDealerTotal()==21){
-            g.setColor(Color.green);
-        }
-        g.drawString(bjack.getDealerTotal()+"",20,40);
-        g.setColor(Color.black);
-        g.drawString("$"+balance, 100, 20);
+        g.drawString("$"+balance, 220, 53);
+        g.drawString("AMOUNT:", 90, 22);
         
 	}
 
