@@ -174,6 +174,7 @@ public class Blackjack {
         }
         else{
             while(dealerTotal<=16){
+                
                 dealerHit();
                 if(dealerTotal>21){
                     System.out.println("DEALER BUST");
@@ -182,6 +183,8 @@ public class Blackjack {
                 else if(dealerTotal>16){
                     break;
                 }
+                
+                
             }
             if (total>dealerTotal || (hand.size()>=6 && total<=21)){
                 System.out.println("WIN");
