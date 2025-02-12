@@ -95,14 +95,7 @@ public class Blackjack {
         
     
     }
-    public void shuffle(){
-        for(int i = 0; i < deck.length; i++){
-            int swapper = (int)(Math.random()*deck.length);
-            Card temp = deck[i];
-            deck[i] = deck[swapper];
-            deck[swapper] = temp;
-        }
-    }
+    
 
     public void hit(){
         Card nextCard = deck[deckIndex];
@@ -165,6 +158,14 @@ public class Blackjack {
         dealerHit();
         dealerHit();
         return 1;
+    }
+    public void shuffle(){
+        for(int i = 0; i < deck.length; i++){
+            int swapper = (int)(Math.random()*deck.length);
+            Card temp = deck[i];
+            deck[i] = deck[swapper];
+            deck[swapper] = temp;
+        }
     }
     public int evaluate(){
         stayed=true;
