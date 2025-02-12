@@ -107,7 +107,10 @@ public class Table extends JPanel implements ActionListener {
         g.drawString("AMOUNT:", 90, 22);
         g.drawString("Balance: $"+balance, 70, 270);
 
-        
+        if(round){
+        g.drawString(bjack.getTotal()+"", 623,500);
+        g.drawString(bjack.getDealerTotal()+"", 623,120);
+        }
         
 	}
     public void animate(){
